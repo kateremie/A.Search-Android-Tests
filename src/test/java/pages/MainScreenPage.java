@@ -36,6 +36,7 @@ public class MainScreenPage {
             case ("FirstAd"):
 
                 AddPetButton.shouldHave(Condition.text("Добавить питомца"));
+                AddPetButton.click();
 
                 break;
 
