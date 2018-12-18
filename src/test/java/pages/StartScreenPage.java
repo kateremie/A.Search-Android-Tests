@@ -2,13 +2,11 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import methods.Common;
-import org.openqa.selenium.NoSuchElementException;
+import methods.Helper;
 import org.openqa.selenium.support.FindBy;
 
 import static com.codeborne.selenide.Selenide.page;
 import static data.Constants.*;
-import static methods.Common.*;
 
 public class StartScreenPage{
 
@@ -30,6 +28,9 @@ public class StartScreenPage{
     @FindBy (id = "ru.averia.lostnfound:id/bt_submit")
     public static SelenideElement SubmitButton;
 
+    @FindBy (id = "ru.averia.lostnfound:id/bt_switch_register")
+    public static SelenideElement SwitchSubmitButton;
+
     @FindBy (id = "ru.averia.lostnfound:id/et_email")
     public static SelenideElement Email;
 
@@ -39,20 +40,17 @@ public class StartScreenPage{
     @FindBy (id = "ru.averia.lostnfound:id/cb_agreement")
     public static SelenideElement CheckBox;
 
-    @FindBy(id = "ru.averia.lostnfound:id/tv1")
+    @FindBy (id = "ru.averia.lostnfound:id/tv1")
     public static SelenideElement MyPetEmptyInfo;
 
-    public String userLogin;
+    public static String userLogin;
 
-
-    public static StartScreenPage Init() {
+    public static StartScreenPage start() {
 
        return page(StartScreenPage.class);
     }
 
-    public static StartScreenPage SplashScreen(){
-
-    //    page(StartScreenPage.class);
+    public static StartScreenPage splashScreen(){
 
         Walkthrough1Text.shouldHave(Condition.text
                 ("Поможем быстро найти потерявшегося питомца"));
@@ -70,12 +68,12 @@ public class StartScreenPage{
                 ("Всего за полчаса ваше объявление увидят сотни человек в радиусе 2 км от места потери"));
         NextButton.click();
 
-        Logo.should(Condition.enabled);
+        Logo.should(Condition.visible);
 
         return page(StartScreenPage.class);
     }
 
-    public StartScreenPage SkipSplashScreen(){
+    public StartScreenPage skipSplashScreen(){
 
         Walkthrough1Text.shouldHave(Condition.text
                 ("Поможем быстро найти потерявшегося питомца"));
@@ -86,13 +84,13 @@ public class StartScreenPage{
         return this;
     }
 
-    public MainScreenPage Register(){
+    public StartScreenPage register(){
 
         //TODO: добавить проверку, какой текст на кнопке. Если неверный - переключение между экранами регистрации/авторизации
 
         SubmitButton.shouldHave(Condition.text("Регистрация"));
 
-        userLogin = Common.GenerateRandomUserLogin();
+        userLogin = Helper.generateRandomUserLogin();
         Email.setValue(userLogin);
         Password.setValue(superPass);
 
@@ -102,20 +100,23 @@ public class StartScreenPage{
         MyPetEmptyInfo.shouldHave(Condition.text
                 ("Вы пока не добавили ни одного питомца"));
 
-        return page(MainScreenPage.class);
+        return this;
     }
 
-    public MainScreenPage Login (String email, String password){
+    public MainScreenPage login(String email, String password){
 
-        try {
-            SkipSplashScreen();
+        if (Walkthrough1Text.exists())
+            skipSplashScreen();
+        else
+            {
+            if (SubmitButton.getText().equals("Войти")) {}
+            else {
+                SwitchSubmitButton.click();
+                //sleep(3000);
+                SubmitButton.shouldBe(Condition.enabled);
+                SubmitButton.shouldHave(Condition.text("Войти"));
+            }
         }
-        catch (NoSuchElementException e){
-            System.out.println("Info: no splash screen");
-        }
-
-        SubmitButton.shouldHave(Condition.text("Войти"));
-
         Email.setValue(email);
         Password.setValue(password);
         SubmitButton.click();

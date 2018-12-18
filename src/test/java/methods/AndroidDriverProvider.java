@@ -3,7 +3,6 @@ package methods;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -16,12 +15,12 @@ public class AndroidDriverProvider {
     //private static String port;
 
     public static String device;
-    public static WebDriver driver;
+
     public static AndroidDriver getAndroidDriver() throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.VERSION, "4.4.2");
-        capabilities.setCapability("automationName", "Appium");
+        capabilities.setCapability("automationName", "uiautomator2");
         capabilities.setCapability("deviceName", "LGK43099FEKVAE");
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability(MobileCapabilityType.APP, app_path_win.getAbsolutePath());
@@ -31,6 +30,8 @@ public class AndroidDriverProvider {
         capabilities.setCapability("gpsEnabled", true);
         capabilities.setCapability("unicodeKeyboard", true);
         capabilities.setCapability("resetKeyboard", true);
+        ///////////////////---Run app without reinstall---////////////////////
+        //capabilities.setCapability("noReset", true);
 
         return new AndroidDriver(new URL("http://127.0.0.1:4732/wd/hub"), capabilities);
     }

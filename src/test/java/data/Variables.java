@@ -1,8 +1,11 @@
 package data;
 
+import org.openqa.selenium.Dimension;
+
 public class Variables {
 
     public static String devicename;
+    public static Dimension screensize;
 
     public static final String asuszenpad = "G1NPFP1202437HN";
     public static final String htc = "1234";
