@@ -1,13 +1,9 @@
-package data;
-
-import org.openqa.selenium.Dimension;
+package com.data;
 
 public class Variables {
 
-    public static String devicename;
-    public static Dimension screensize;
-
     public static final String asuszenpad = "G1NPFP1202437HN";
+    public static final String lg_k10_gold = "LGK43099FEKVAE";
     public static final String htc = "1234";
     public static final String samsung_j1 = "32011059ac215467";
     public static final String samsung_edge = "05157df5a3a5c407";
@@ -19,5 +15,6 @@ public class Variables {
     public static final String xiomi_x3 = "2062e4f77d63";
     public static final String nexus_5 = "0aa9469c027f7669";
     public static final String sony_xperia="CB512B042S";
+    public static final String asus_zenfone = "H9AXB7751177BRE";
 
 }

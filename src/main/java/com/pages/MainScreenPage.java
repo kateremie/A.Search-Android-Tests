@@ -1,126 +1,104 @@
-package pages;
+package com.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.offset.PointOption;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.FindBy;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static data.Constants.*;
-import static data.Variables.screensize;
-import static jdk.nashorn.internal.runtime.JSType.toInteger;
-import static methods.Helper.*;
-import static pages.StartScreenPage.userLogin;
 
-public class MainScreenPage {
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
+import static com.data.Constants.*;
+
+public class MainScreenPage extends BasePage{
 
     @FindBy (id = "ru.averia.lostnfound:id/bt_add_pet")
-    public static SelenideElement AddPetButton;
-
+    public SelenideElement AddPetButton;
     @FindBy (id = "ru.averia.lostnfound:id/tv_add_pet")
-    public static SelenideElement AddAnotherPetButton;
-
+    public SelenideElement AddAnotherPetButton;
     @FindBy (id = "ru.averia.lostnfound:id/tv_caption")
-    public static SelenideElement AddPetTitle;
-
+    public SelenideElement AddPetTitle;
     @FindBy (xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup[2]/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.support.v7.widget.RecyclerView/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.ImageView")
-    public static SelenideElement PhotoBar;
-
+    public SelenideElement PhotoBar;
     @FindBy (xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup[2]/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.widget.TextView[1]")
-    public static SelenideElement SubtitlePets;
-
+    public SelenideElement SubtitlePets;
     @FindBy (id = "ru.averia.lostnfound:id/rb_dog")
-    public static SelenideElement RBDog;
-
+    public SelenideElement RBDog;
     @FindBy (id = "ru.averia.lostnfound:id/rb_cat")
-    public static SelenideElement RBCat;
-
+    public SelenideElement RBCat;
     @FindBy (id = "ru.averia.lostnfound:id/actv_breed")
-    public static SelenideElement Breed;
-
+    public SelenideElement Breed;
     @FindBy (id = "ru.averia.lostnfound:id/rb_male")
-    public static SelenideElement SexM;
-
+    public SelenideElement SexM;
     @FindBy (id = "ru.averia.lostnfound:id/rb_female")
-    public static SelenideElement SexF;
-
+    public SelenideElement SexF;
     @FindBy (id = "ru.averia.lostnfound:id/tv_breed")
-    public static SelenideElement BreedandSex;
-
+    public SelenideElement BreedandSex;
     @FindBy (id = "ru.averia.lostnfound:id/et_alias")
-    public static SelenideElement Name;
-
+    public SelenideElement Name;
     @FindBy (id = "ru.averia.lostnfound:id/et_reward")
-    public static SelenideElement Reward;
-
+    public SelenideElement Reward;
     @FindBy (id = "ru.averia.lostnfound:id/tv_reward")
-    public static SelenideElement RewardRub;
-
+    public SelenideElement RewardRub;
     @FindBy (id = "ru.averia.lostnfound:id/et_specials")
-    public static SelenideElement SpecificMarks;
-
+    public SelenideElement SpecificMarks;
     @FindBy (id = "ru.averia.lostnfound:id/tv_description")
-    public static SelenideElement PetDescription;
-
+    public SelenideElement PetDescription;
     @FindBy(id = "ru.averia.lostnfound:id/bt_submit")
-    public static SelenideElement SubmitButton;
-
+    public SelenideElement SubmitButton;
     @FindBy (id = "ru.averia.lostnfound:id/tv_personal")
-    public static SelenideElement AddPet2Title;
-
+    public SelenideElement AddPet2Title;
     @FindBy (id = "ru.averia.lostnfound:id/et_name")
-    public static SelenideElement UserName;
-
+    public SelenideElement UserName;
     @FindBy (id = "ru.averia.lostnfound:id/et_surname")
-    public static SelenideElement UserSurname;
-
+    public SelenideElement UserSurname;
     @FindBy (id = "ru.averia.lostnfound:id/et_phone")
-    public static SelenideElement Phone;
-
+    public SelenideElement Phone;
     @FindBy (id = "ru.averia.lostnfound:id/et_email")
-    public static SelenideElement Email;
-
+    public SelenideElement Email;
     @FindBy (id = "ru.averia.lostnfound:id/tv_pet_name")
-    public static SelenideElement ActivePet;
-
+    public SelenideElement ActivePet;
     @FindBy (id = "ru.averia.lostnfound:id/tv_edit")
-    public static SelenideElement EditAdButton;
-
+    public SelenideElement EditAdButton;
     @FindBy (id = "ru.averia.lostnfound:id/iv_photo")
-    public static SelenideElement PetPhoto;
-
+    public SelenideElement PetPhoto;
     @FindBy (id = "ru.averia.lostnfound:id/tv_moderating_status")
-    public static SelenideElement ModeratingStatus;
-
+    public SelenideElement ModeratingStatus;
     @FindBy (id = "ru.averia.lostnfound:id/iv_delete")
-    public static SelenideElement DeleteButton;
-    ///hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.ImageView[2]
-
+    public SelenideElement DeleteButton;
     @FindBy (id = "ru.averia.lostnfound:id/md_buttonDefaultPositive")
-    public static SelenideElement YesBtn;
-
+    public SelenideElement YesBtn;
     @FindBy (id = "ru.averia.lostnfound:id/bt_start_ad")
-    public static SelenideElement StartAdButton;
+    public SelenideElement StartAdButton;
+    @FindBy(id = "ru.averia.lostnfound:id/tv_contacts")
+    public SelenideElement ContactInfo;
+    @FindBy (id = "ru.averia.lostnfound:id/action_search")
+    public SelenideElement SearchTab;
 
-    public static MainScreenPage goMain(){
+    Logger logger;
+    public String login;
 
-        //TODO: tap pets navbar + check
-        return page (MainScreenPage.class);
+    public MainScreenPage(String device, Dimension screensize, String userLogin) {
+        super(device, screensize, userLogin);
+        logger = LogManager.getLogger("MainScreen");
     }
 
-    public MainScreenPage choosePet (String petName){
+    public MainScreenPage goMain(){
+        return  page(this);
+    }
+
+    public MainScreenPage choosePet(String petName){
 
         ActivePet.click();
         $x(String.format("//android.widget.TextView[contains(@text,'%s')]", petName)).click();
         ActivePet.shouldHave(Condition.text(petName));
 
-        return this;
+        logger.info(device + ": Pet chosen successfully");
+        return page(this);
     }
 
-    public MainScreenPage addAd(String precondition, String petName){
+    public MainScreenPage addPet(String precondition, String petName){
 
         switch (precondition){
 
@@ -139,15 +117,19 @@ public class MainScreenPage {
 
                 break;
         }
-        //TODO: добавить проверку на steps (progress bar)
+        //TODO: add progress bar check
 
         AddPetTitle.shouldHave(text("Добавить питомца"));
         PhotoBar.click();
-        TakePhoto();
+        phonePhoto("pet");
 
         scrollUp(0.95);
         RBDog.click();
-        Breed.setValue(breed).click();
+        Breed.setValue(breed);
+
+        if(device.matches("lg_k10_gold|lg"))
+            scrollUp(0.6);
+
         SexM.click();
 
         scrollUp(0.9);
@@ -155,6 +137,8 @@ public class MainScreenPage {
         Reward.setValue(reward);
         SpecificMarks.setValue(specific_marks);
         SubmitButton.click();
+
+        login = userLogin;
 
         switch (precondition) {
 
@@ -164,53 +148,55 @@ public class MainScreenPage {
                 UserName.setValue(userName);
                 UserSurname.setValue(userSurname);
                 Phone.setValue(phoneNumber);
-                Email.shouldHave(Condition.text(userLogin));
+                Email.shouldHave(Condition.text(login));
 
                 scrollUp(0.9);
                 SubmitButton.click();
-                sleep(10000);
-                SubmitButton.shouldHave(text("Готово")).click();
+                ContactInfo.waitUntil(hidden,10000);
+                SubmitButton.waitUntil(visible,5000).shouldHave(text("Готово")).click();
 
                 break;
 
             case ("NextAd"):
-
                 break;
-
         }
-
         ActivePet.shouldHave(text(petName));
 
-    return this;
+        return  page(this);
     }
 
-    public MainScreenPage checkAd(String petName){
+    public MainScreenPage checkPetInfo(String petName){
 
+        //TODO: add other pet parameters in the method signature
+        SearchTab.click();
         ActivePet.shouldHave(text(petName));
         PetPhoto.shouldBe(Condition.visible);
+
+        //TODO: sex should be variable
         BreedandSex.should(text(breed + ", кобель"));
-        RewardRub.text().contains(reward);
+        RewardRub.should(text(reward));
         PetDescription.should(text(specific_marks));
         ModeratingStatus.should(text("Объявление на модерации"));
         //TODO: check pop up moderating view
-        return this;
+
+        logger.info(device + ": Ad checked");
+        return  page(this);
     }
 
-    public MainScreenPage adsStatus(){
+    public MainScreenPage checkPetStatus(){
+
+        //for testUser and fixed set of pets
 
         ActivePet.click();
-        //TODO: 1 - pet icon
 
         for (int i=1; i<3; i++)
-            //for (int i=0; i<4; i++) ---> AS-83
+            //for (int i=0; i<4; i++) blocked by AS-83
            $x("//android.view.ViewGroup[" + i + "]/android.view.ViewGroup[@resource-id ='ru.averia.lostnfound:id/container_status']")
                    .shouldBe(Condition.exist);
-
         ActivePet.click();
 
-        //TODO: 2 - choose pet&check moderation status
-        /*choosePet("Approuved"); ---> AS-83
-        StartAdButton.shouldBe(Condition.exist);*/
+        //choosePet("Approuved"); blocked by AS-83
+        //StartAdButton.shouldBe(Condition.exist);
 
         choosePet("Denied");
         ModeratingStatus.shouldHave(Condition.text("Ошибка модерации"));
@@ -218,16 +204,17 @@ public class MainScreenPage {
         choosePet("Moderating");
         ModeratingStatus.shouldHave(Condition.text("Объявление на модерации"));
 
-        /*choosePet("Vk moderating"); ---> AS-83
-        ModeratingStatus.shouldHave(Condition.text("Объявление на модерации"));*/
+        //choosePet("Vk moderating"); blocked by AS-83
+        //ModeratingStatus.shouldHave(Condition.text("Объявление на модерации"));
 
-        return this;
+        return  page(this);
     }
 
-    public MainScreenPage editAd(){
-        //public MainScreenPage EditAd(String petName){
+    public MainScreenPage editPet(){
 
-        //TODO: for each device specific pet in approuved status :: blocked by AS-83 (case with changing status)
+        SearchTab.click();
+
+        //TODO: changing status case (blocked by AS-83)
         EditAdButton.click();
         scrollUp(0.95);
         RBCat.click();
@@ -241,16 +228,17 @@ public class MainScreenPage {
 
         ActivePet.shouldHave(text("EditedAd"));
         BreedandSex.should(text("Мейн кун, кошка"));
-        RewardRub.text().contains("100 500 \u20BD");
+        RewardRub.should(text("100 500 \u20BD"));
         PetDescription.should(text("Ad will be deleted"));
 
-        //TODO: 9 - check: status (approuved >> moderating) :: blocked by AS-83
+        //TODO: check status (approuved >> moderating) :: blocked by AS-83
 
-    return this;
+        return  page(this);
     }
 
-    public MainScreenPage deleteAd (String petName){
+    public MainScreenPage deletePet(String petName){
 
+        SearchTab.click();
         EditAdButton.click();
         DeleteButton.click();
         YesBtn.click();
@@ -258,23 +246,15 @@ public class MainScreenPage {
             ActivePet.click();
             //TODO: add variable petName
             $x("//android.widget.TextView[contains(@text,'"+petName+"')]").shouldNotBe(Condition.exist);
-            System.out.println("Ad was deleted successfully");
+            System.out.println("Ad deleted successfully");
         }
        else {
-
-           if (AddPetButton.is(Condition.exist)){
-                System.out.println("Single ad was deleted successfully");
-
-            }
-            else  {
-                System.out.println("Ad is'nt deleted");
-            }
+           if (AddPetButton.is(Condition.exist))
+               logger.info("Single ad deleted successfully");
+            else
+               logger.error("Ad is'nt deleted");
         }
-            sleep(3000);
 
-            TouchAction action = new TouchAction((PerformsTouchActions) getWebDriver());
-            action.tap(PointOption.point(toInteger(screensize.getWidth()*0.5), toInteger(screensize.getHeight()*0.2))).perform();
-
-        return this;
+        return  page(this);
     }
 }

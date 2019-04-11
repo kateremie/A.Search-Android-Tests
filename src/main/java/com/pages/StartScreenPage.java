@@ -1,56 +1,54 @@
-package pages;
+package com.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import methods.Helper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.FindBy;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.page;
-import static data.Constants.*;
+import static com.data.Constants.*;
 
-public class StartScreenPage{
+public class StartScreenPage extends BasePage{
 
     @FindBy (xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.TextView")
-    public static SelenideElement Walkthrough1Text;
-
+    public SelenideElement Walkthrough1Text;
     @FindBy (id = "ru.averia.lostnfound:id/bt_next")
-    public static SelenideElement NextButton;
-
+    public SelenideElement NextButton;
     @FindBy (id = "ru.averia.lostnfound:id/tv_main")
-    public static SelenideElement Walkthrough2_3_4Text;
-
+    public SelenideElement Walkthrough2_3_4Text;
     @FindBy (id = "ru.averia.lostnfound:id/tv_skip")
-    public static SelenideElement SkipButton;
-
+    public SelenideElement SkipButton;
     @FindBy (id = "ru.averia.lostnfound:id/iv_figure")
-    public static SelenideElement Logo;
-
+    public SelenideElement Logo;
     @FindBy (id = "ru.averia.lostnfound:id/bt_submit")
-    public static SelenideElement SubmitButton;
-
+    public SelenideElement SubmitButton;
     @FindBy (id = "ru.averia.lostnfound:id/bt_switch_register")
-    public static SelenideElement SwitchSubmitButton;
-
+    public SelenideElement SwitchSubmitButton;
     @FindBy (id = "ru.averia.lostnfound:id/et_email")
-    public static SelenideElement Email;
-
+    public SelenideElement Email;
     @FindBy (id = "ru.averia.lostnfound:id/et_password")
-    public static SelenideElement Password;
-
+    public SelenideElement Password;
     @FindBy (id = "ru.averia.lostnfound:id/cb_agreement")
-    public static SelenideElement CheckBox;
-
+    public SelenideElement CheckBox;
     @FindBy (id = "ru.averia.lostnfound:id/tv1")
-    public static SelenideElement MyPetEmptyInfo;
+    public SelenideElement MyPetEmptyInfo;
 
-    public static String userLogin;
+    Logger logger;
 
-    public static StartScreenPage start() {
-
-       return page(StartScreenPage.class);
+    public StartScreenPage(String device, Dimension screensize, String userLogin) {
+        super(device, screensize, userLogin);
+        logger = LogManager.getLogger("StartScreen");
     }
 
-    public static StartScreenPage splashScreen(){
+    public StartScreenPage start(){
+
+        return page(this);
+    }
+
+    public StartScreenPage splashScreen(){
 
         Walkthrough1Text.shouldHave(Condition.text
                 ("Поможем быстро найти потерявшегося питомца"));
@@ -70,7 +68,8 @@ public class StartScreenPage{
 
         Logo.should(Condition.visible);
 
-        return page(StartScreenPage.class);
+        logger.info(device +": SplashScreen method finished");
+        return page(this);
     }
 
     public StartScreenPage skipSplashScreen(){
@@ -81,16 +80,18 @@ public class StartScreenPage{
 
         Logo.should(Condition.enabled);
 
-        return this;
+        logger.info(device + ": SplashScreen skipped");
+        return page(this);
     }
 
-    public StartScreenPage register(){
+    public StartScreenPage registration(){
 
-        //TODO: добавить проверку, какой текст на кнопке. Если неверный - переключение между экранами регистрации/авторизации
+        //TODO: add button check. In the case of wrong text switch login/registration screen
 
         SubmitButton.shouldHave(Condition.text("Регистрация"));
 
-        userLogin = Helper.generateRandomUserLogin();
+        logger.info(device+": "+"User Login is " + userLogin);
+
         Email.setValue(userLogin);
         Password.setValue(superPass);
 
@@ -100,28 +101,37 @@ public class StartScreenPage{
         MyPetEmptyInfo.shouldHave(Condition.text
                 ("Вы пока не добавили ни одного питомца"));
 
-        return this;
+        return page(this);
     }
 
-    public MainScreenPage login(String email, String password){
+    public StartScreenPage login(String email, String password){
 
         if (Walkthrough1Text.exists())
+        {
+            logger.info(device + ": App starts from Splash Screen");
             skipSplashScreen();
+        }
         else
             {
-            if (SubmitButton.getText().equals("Войти")) {}
+            if (SubmitButton.getText().equals("Войти"))
+                logger.info(device + ": App starts from Login Screen");
+
             else {
+                logger.info(device + ": App starts from Registration Screen");
+
                 SwitchSubmitButton.click();
-                //sleep(3000);
-                SubmitButton.shouldBe(Condition.enabled);
+                SubmitButton.waitUntil(visible, 5000);
                 SubmitButton.shouldHave(Condition.text("Войти"));
             }
         }
         Email.setValue(email);
         Password.setValue(password);
         SubmitButton.click();
+        //CheckBox.click(); - failed test check
 
-        return page(MainScreenPage.class);
+        //TODO: add check!
+
+        return page(this);
     }
 
 }

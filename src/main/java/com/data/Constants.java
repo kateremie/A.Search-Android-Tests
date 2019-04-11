@@ -1,4 +1,4 @@
-package data;
+package com.data;
 
 import java.io.File;
 
@@ -17,3 +17,4 @@ public class Constants {
     public static String userSurname = "Test User";
     public static String phoneNumber = "8127654321";
 }
+
